@@ -28,5 +28,4 @@ Route::middleware(['auth:sanctum', 'inactivity.timeout'])->group(function () {
     Route::get('/profile', [UserController::class, 'getprofile']);
     Route::put('/profile', [UserController::class, 'update']);
     Route::post('/logout', [UserController::class, 'logout']);
-    Route::get('/cek', [UserController::class, 'someMethod']);
 });

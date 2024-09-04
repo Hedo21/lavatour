@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+
 /** @var \App\Models\User $user **/
 
 class UserController extends Controller
@@ -42,10 +43,10 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             if ($user) {
-                $token = $user->createToken('auth_token')->plainTextToken;
+                // $token = $user->createToken('auth_token')->plainTextToken;
                 return response()->json([
                     'status'       => 'success',
-                    'access_token' => $token,
+                    // 'access_token' => $token,
                     'message'      => 'registration success',
                 ], 200);
             } else {
@@ -92,7 +93,7 @@ class UserController extends Controller
                 return response($response, 200);
             } else {
                 $response = [
-                    'stutus'  => 'failed',
+                    'status'  => 'failed',
                     'message' => 'incorrect password',
                 ];
                 return response($response, 422);
@@ -154,35 +155,9 @@ class UserController extends Controller
         }
     }
 
-    public function someMethod()
-    {
-        // $user = Auth::user();
-        // Log::info('Authenticated User:', ['user' => $user]);
-        // return [
-        //     'data' => $user,
-        // ];
-
-        // return [
-        //     'data' => Auth::user(),
-        // ];
-
-        // dd(Auth::user());
-
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json([
-                'status'  => 'failed',
-                'message' => 'Unauthorized',
-            ], 401);
-        }
-        return response()->json([
-            'user' => $user
-        ]);
-    }
-
     public function logout()
     {
-        auth()->user()->tokens()->delete();
+        Auth::user()->tokens()->delete();
         return [
             'status'  => 'success',
             'message' => 'log out success'
